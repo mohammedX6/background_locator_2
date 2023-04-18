@@ -95,10 +95,8 @@ class IsolateHolderService : MethodChannel.MethodCallHandler, LocationUpdateList
         // Starting Service as foreground with a notification prevent service from closing
         val notification = getNotification()
         startForeground(notificationId, notification)
-
-        pluggables.forEach {
-            context?.let { it1 -> it.onServiceStart(it1) }
-        }
+        
+        Handler(Looper.getMainLooper()).postDelayed( { pluggables.forEach { context?.let { it1 -> it.onServiceStart(it1) } } }, 1000  )
     }
 
     private fun getNotification(): Notification {
